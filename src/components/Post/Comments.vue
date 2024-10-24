@@ -6,12 +6,19 @@ const props = defineProps({
 })
 
 const { total, comments } = await useApi.getCommentsPostById({ id: props.postId })
+const totalRef = ref(total)
+const commentsRef = ref([...comments])
+
+function handleDelete(index) {
+  totalRef.value--
+  commentsRef.value.splice(index, 1)
+}
 </script>
 
 <template>
   <section class="comments">
-    <div class="title">{{ total }} {{ useFilters.pluralize(total, 'комментарий', 'комментария', 'комментариев') }}</div>
-    <Comment v-for="comment in comments" :key="comment.id" :comment="comment" />
+    <div class="title">{{ totalRef }} {{ useFilters.pluralize(totalRef, 'комментарий', 'комментария', 'комментариев') }}</div>
+    <Comment v-for="(comment, index) in commentsRef" :key="comment.id" :comment="comment" @delete="handleDelete(index)" />
   </section>
 </template>
 

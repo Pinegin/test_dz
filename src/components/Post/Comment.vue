@@ -2,6 +2,7 @@
 defineProps({
   comment: { type: Object, required: true },
 })
+const emit = defineEmits(['delete'])
 </script>
 
 <template>
@@ -11,7 +12,7 @@ defineProps({
     <div class="content">{{ comment.body }}</div>
     <div class="options">
       <div class="date">Today</div>
-      <button class="delete">Удалить</button>
+      <button class="delete" @click="emit('delete')">Удалить</button>
     </div>
   </div>
 </template>
@@ -59,6 +60,11 @@ defineProps({
       color: rgb(255, 59, 48);
       text-decoration: none;
       border-bottom: 1px solid rgba(255, 59, 48, 30%);
+      cursor: pointer;
+
+      &:hover {
+        border-bottom-color: transparent;
+      }
     }
   }
 }
